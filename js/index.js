@@ -28,5 +28,6 @@ window.onload = () => {
     startScreen.style.display = "none"
 
 
-
+  }
 };
+
