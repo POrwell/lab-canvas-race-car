@@ -14,8 +14,8 @@ let carHeight = 100;
 let XStartPosition = (cvWidth/2)-(carWidth/2);
 let YStartPosition= cvHeight-carHeight;
 let XCarMove = 0
-let MoveRight = +15;
-let MoveLeft = -15;
+let MoveRight = +5;
+let MoveLeft = -5;
 
 // UPON LOADING
 window.onload = () => {
@@ -32,36 +32,57 @@ clearCar();
 ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
 moveCar();
 drawCar();
+requestAnimationFrame(animate);
   };
 
 const clearCar = () => {ctx.clearRect(0, 0, cvWidth, cvHeight)};
-  const moveCar = () => {
+
+const moveCar = () => {
     if(XStartPosition + XCarMove <= cvWidth - carWidth - 60 && XStartPosition + XCarMove >= 0 + carWidth + 10) 
     {XStartPosition += XCarMove}
   };
-  const drawCar = () => {ctx.drawImage(carImg, XStartPosition, YStartPosition, carWidth, carHeight)};  
+
+const drawCar = () => {ctx.drawImage(carImg, XStartPosition, YStartPosition, carWidth, carHeight)};  
+
+const obstacle = () => {ctx.beginPath();
+    ctx.fillStyle = "hotpink";
+    ctx.fillRect(0, 0, 400, 20);
+    ctx.closePath()};
+
 
   // CALLBACK FUNCTION TO BE INVOKED UPON START BUTTON CLICK
   function startGame() {
     // MAKE START SCREEN DISAPPEAR
     const startScreen = document.querySelector(".game-intro");
     startScreen.style.display = "none"
+    animate();
+  }
 
-    // MAKE CAR APPEAR
-drawCar();
+    // MAKE CAR AND OBSTACLES APPEAR
+
+
+// const intervalId = setInterval(obstacle(), 5000);
+
 
 // MAKE CAR MOVE LEFT AND RIGHT
 document.addEventListener("keydown", event => {
   if(event.key === "ArrowRight") {
-
     XCarMove = MoveRight
-    animate();
+  
   }
   else if (event.key === "ArrowLeft") {
     XCarMove = MoveLeft
-    animate();
   }
 })
 
-}
+document.addEventListener("keyup", event => {
+ XCarMove = 0;
+})
+
+// MAKE OBSTACLES APPEAR
+
+
+
+
+
 };
