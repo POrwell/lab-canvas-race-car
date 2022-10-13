@@ -11,6 +11,11 @@ let cvWidth = canvas.width;
 let cvHeight = canvas.height;
 let carWidth = 50;
 let carHeight = 100;
+let XStartPosition = (cvWidth/2)-(carWidth/2);
+let YStartPosition= cvHeight-carHeight;
+let XCarMove = 0
+let MoveRight = +15;
+let MoveLeft = -15;
 
 // UPON LOADING
 window.onload = () => {
@@ -21,6 +26,21 @@ window.onload = () => {
   // GET BACKGROUND IMAGE
   ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
 
+  // FUNCTIONS
+  const animate = () => {
+clearCar();
+ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height);
+moveCar();
+drawCar();
+  };
+
+const clearCar = () => {ctx.clearRect(0, 0, cvWidth, cvHeight)};
+  const moveCar = () => {
+    if(XStartPosition + XCarMove <= cvWidth - carWidth - 60 && XStartPosition + XCarMove >= 0 + carWidth + 10) 
+    {XStartPosition += XCarMove}
+  };
+  const drawCar = () => {ctx.drawImage(carImg, XStartPosition, YStartPosition, carWidth, carHeight)};  
+
   // CALLBACK FUNCTION TO BE INVOKED UPON START BUTTON CLICK
   function startGame() {
     // MAKE START SCREEN DISAPPEAR
@@ -28,8 +48,20 @@ window.onload = () => {
     startScreen.style.display = "none"
 
     // MAKE CAR APPEAR
-ctx.drawImage(carImg, 250-(carWidth/2), 700-carHeight, carWidth, carHeight);
+drawCar();
+
+// MAKE CAR MOVE LEFT AND RIGHT
+document.addEventListener("keydown", event => {
+  if(event.key === "ArrowRight") {
+
+    XCarMove = MoveRight
+    animate();
+  }
+  else if (event.key === "ArrowLeft") {
+    XCarMove = MoveLeft
+    animate();
+  }
+})
+
 }
-
-
 };
