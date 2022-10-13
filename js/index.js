@@ -27,6 +27,9 @@ window.onload = () => {
     const startScreen = document.querySelector(".game-intro");
     startScreen.style.display = "none"
 
+    // MAKE CAR APPEAR
+ctx.drawImage(carImg, 250-(carWidth/2), 700-carHeight, carWidth, carHeight);
+}
 
 
 };
