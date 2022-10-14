@@ -20,8 +20,21 @@ let YStartPosition= cvHeight-carHeight;
 let XCarMove = 0
 let MoveRight = +5;
 let MoveLeft = -5;
-let obstacleStartPosition = 0;
-let obstacleMove = 1;
+let obstacleWidth = 100;
+let obstacleHeight = 40;
+let obstacleMove = 5;
+let gameId = 0;
+const obstacles = [];
+
+class Obstacle {
+  constructor() {
+this.x = Math.random() * (cvWidth - obstacleWidth);
+this.y = 0;
+  }
+  move() {
+this.y += obstacleMove;
+  }
+}
 
 
 // UPON LOADING
@@ -42,14 +55,16 @@ drawRoad();
 moveRoad();
 drawRoad2();
 moveRoad2();
+if (gameId % 100 === 0) {
+obstacles.push(new Obstacle())
+};
+obstacles.forEach((obstacle) => {
+  drawObstacle(obstacle.x, obstacle.y)
+  obstacle.move()
+})
 drawCar();
 moveCar();
-newObstacle();
-let gameId = requestAnimationFrame(animate)
-console.log(gameId)
-if (gameId === 5000) {
-  cancelAnimationFrame(gameId)
-}
+gameId = requestAnimationFrame(animate)
   };
 
 
@@ -82,20 +97,12 @@ const moveCar = () => {
 
 const drawCar = () => {ctx.drawImage(carImg, XStartPosition, YStartPosition, carWidth, carHeight)};  
 
-const drawObstacle = () => {ctx.beginPath();
-    ctx.fillStyle = "orange";
-    ctx.fillRect(0, obstacleStartPosition, 400, 20);
-    ctx.closePath()};
+const drawObstacle = (ObstacleX, ObstacleY) => {
+  ctx.beginPath();
+  ctx.fillStyle = "orange";
+  ctx.fillRect(ObstacleX, ObstacleY, obstacleWidth, obstacleHeight);
+  ctx.closePath()};
 
-const moveObstacle = () => {
-  let obstacleCurrentPosition = obstacleStartPosition += obstacleMove;
-  obstacleCurrentPosition;
-}
-
-const newObstacle = () => {
-  drawObstacle();
-  moveObstacle();
-}
    
   // CALLBACK FUNCTION TO BE INVOKED UPON START BUTTON CLICK
   function startGame() {
