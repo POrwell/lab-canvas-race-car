@@ -45,7 +45,11 @@ moveRoad2();
 drawCar();
 moveCar();
 newObstacle();
-requestAnimationFrame(animate);
+let gameId = requestAnimationFrame(animate)
+console.log(gameId)
+if (gameId === 5000) {
+  cancelAnimationFrame(gameId)
+}
   };
 
 
@@ -99,7 +103,6 @@ const newObstacle = () => {
     const startScreen = document.querySelector(".game-intro");
     startScreen.style.display = "none"
     animate();
-  }
 
 }
 // MAKE CAR MOVE LEFT AND RIGHT
@@ -117,3 +120,4 @@ document.addEventListener("keyup", event => {
  XCarMove = 0;
 })
 
+}
